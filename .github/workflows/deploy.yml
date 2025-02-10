@@ -17,7 +17,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: <13.61.21.144>
-          username: debian  # ou "admin" selon ton instance
+          username: admin  # ou "admin" selon ton instance
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
