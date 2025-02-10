@@ -1,0 +1,25 @@
+name: Deploy to Amazon Linux
+
+on:
+  push:
+    branches:
+      - main  # Déclenche le workflow à chaque push sur la branche main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: <IP_de_ton_instance>
+          username: ec2-user
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/mon-projet
+            git pull origin main
+            echo "Déploiement réussi"
