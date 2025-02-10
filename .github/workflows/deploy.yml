@@ -3,7 +3,7 @@ name: Deploy to Debian
 on:
   push:
     branches:
-      - main
+      - main  # Déclenche le workflow sur chaque push sur main
 
 jobs:
   deploy:
@@ -16,9 +16,21 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.9
         with:
-          host: <13.61.21.144>
-          username: admin  # ou "admin" selon ton instance
-          key: ${{ secrets.SSH_KEY }}
+          host: <13.61.21.144>  # Mets ici l'IP publique de ton instance AWS
+          username: admin  # Utilisateur Debian sur AWS
+          key: ${{ secrets.SSH_KEY }}  # Clé SSH stockée dans GitHub Secrets
           port: 22
           script: |
             echo "Connexion SSH réussie"
+            
+            if [ ! -d "/home/debian/mon-projet" ]; then
+              echo "Dossier absent, clonage..."
+              git clone git@github.com:TVTVNE/elias.git /home/debian/mon-projet
+            else
+              echo "Mise à jour du dépôt..."
+              cd /home/debian/mon-projet
+              git pull origin main
+            fi
+            
+            echo "Déploiement terminé."
+
