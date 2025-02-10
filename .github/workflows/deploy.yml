@@ -22,9 +22,3 @@ jobs:
           port: 22
           script: |
             echo "Connexion SSH réussie"
-            
-            # Vérifier si le dossier existe sinon le créer
-            if [ ! -d "/home/debian/mon-projet" ]; then
-              echo "Dossier ~/mon-projet absent, clonage du dépôt..."
-              git clone git@github.com:<TON_UTILISATEUR_GITHUB>/<TON_REPO>.git /home/debian/mon-projet
-            else
